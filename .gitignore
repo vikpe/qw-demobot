@@ -1,0 +1,7 @@
+.idea/
+cmd/proxy/proxy
+cmd/quake_manager/quake_manager
+cmd/twitch_chatbot/twitch_chatbot
+cmd/twitch_manager/twitch_manager
+coverage.out
+.env
