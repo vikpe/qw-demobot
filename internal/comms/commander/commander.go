@@ -33,10 +33,6 @@ func (c Commander) Evaluate() {
 	c.sendMessage(topic.QuakeManagerEvaluate)
 }
 
-func (c Commander) Jump() {
-	c.Command("bot_jump")
-}
-
 func (c Commander) LoadConfig() {
 	c.sendMessage(topic.EzquakeScript, "load_config")
 }

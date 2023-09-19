@@ -44,15 +44,6 @@ func TestCommander_Evaluate(t *testing.T) {
 	assert.Equal(t, expectedCalls, publisher.SendMessageCalls)
 }
 
-func TestCommander_Jump(t *testing.T) {
-	publisher := mock.NewPublisherMock()
-	cmder := commander.NewCommander(publisher.SendMessage)
-	cmder.Jump()
-
-	expectedCalls := [][]any{{"ezquake.command", "bot_jump"}}
-	assert.Equal(t, expectedCalls, publisher.SendMessageCalls)
-}
-
 func TestCommander_LoadConfig(t *testing.T) {
 	publisher := mock.NewPublisherMock()
 	cmder := commander.NewCommander(publisher.SendMessage)
