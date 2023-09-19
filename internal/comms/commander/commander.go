@@ -37,6 +37,10 @@ func (c Commander) LoadConfig() {
 	c.sendMessage(topic.EzquakeScript, "load_config")
 }
 
+func (c Commander) Showscores() {
+	c.sendMessage(topic.EzquakeScript, "showscores")
+}
+
 func (c Commander) StopEzquake() {
 	c.sendMessage(topic.EzquakeStop)
 }

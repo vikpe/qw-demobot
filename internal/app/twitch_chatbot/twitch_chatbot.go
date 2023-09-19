@@ -105,6 +105,10 @@ func New(channelName, channelAccessToken, subscriberAddress, publisherAddress st
 		})
 	})
 
+	bot.AddCommand("showscores", func(cmd chatbot.Command, msg twitch.PrivateMessage) {
+		cmder.Showscores()
+	})
+
 	bot.AddCommand("track", func(cmd chatbot.Command, msg twitch.PrivateMessage) {
 		cmder.Track(cmd.ArgsToString())
 	})

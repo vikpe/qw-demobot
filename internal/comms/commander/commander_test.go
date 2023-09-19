@@ -53,6 +53,15 @@ func TestCommander_LoadConfig(t *testing.T) {
 	assert.Equal(t, expectedCalls, publisher.SendMessageCalls)
 }
 
+func TestCommander_Showscores(t *testing.T) {
+	publisher := mock.NewPublisherMock()
+	cmder := commander.NewCommander(publisher.SendMessage)
+	cmder.Showscores()
+
+	expectedCalls := [][]any{{"ezquake.script", "showscores"}}
+	assert.Equal(t, expectedCalls, publisher.SendMessageCalls)
+}
+
 func TestCommander_StopEzquake(t *testing.T) {
 	publisher := mock.NewPublisherMock()
 	cmder := commander.NewCommander(publisher.SendMessage)

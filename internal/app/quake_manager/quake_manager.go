@@ -114,6 +114,9 @@ func (m *QuakeManager) OnEzquakeScript(msg message.Message) {
 	switch script {
 	case "load_config":
 		m.commander.Command("cfg_load")
+	case "showscores":
+		m.commander.Command("+showscores")
+		time.AfterFunc(8*time.Second, func() { m.commander.Command("-showscores") })
 	}
 }
 
