@@ -75,20 +75,30 @@ func New(channelName, channelAccessToken, subscriberAddress, publisherAddress st
 		cmder.Command(cmd.ArgsToString())
 	})
 
-	bot.AddCommand("help", func(cmd chatbot.Command, msg twitch.PrivateMessage) {
-		bot.Reply(msg, "see the channel description for info/commands.")
-	})
-
 	bot.AddCommand("commands", func(cmd chatbot.Command, msg twitch.PrivateMessage) {
 		replyMessage := fmt.Sprintf(`available commands: %s`, bot.GetCommands(", "))
 		bot.Reply(msg, replyMessage)
 	})
 
-	bot.AddCommand("jump", func(cmd chatbot.Command, msg twitch.PrivateMessage) {
-		cmder.Jump()
+	bot.AddCommand("help", func(cmd chatbot.Command, msg twitch.PrivateMessage) {
+		replyMessage := fmt.Sprintf(`available commands: %s`, bot.GetCommands(", "))
+		bot.Reply(msg, replyMessage)
+	})
+
+	bot.AddCommand("next", func(cmd chatbot.Command, msg twitch.PrivateMessage) {
+		cmder.Command("demo_playlist_next")
+	})
+
+	bot.AddCommand("prev", func(cmd chatbot.Command, msg twitch.PrivateMessage) {
+		cmder.Command("demo_playlist_prev")
 	})
 
 	bot.AddCommand("restart", func(cmd chatbot.Command, msg twitch.PrivateMessage) {
+		if !chatbot.IsModerator(msg.User) {
+			bot.Reply(msg, "restart is a mod-only command.")
+			return
+		}
+
 		cmder.StopEzquake()
 		time.AfterFunc(1250*time.Millisecond, func() {
 			cmder.StopQuakeManager()
