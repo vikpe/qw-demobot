@@ -18,7 +18,7 @@ So basically all you have to do is to write commands to `/tmp/ezquake_[username]
 
 ## Overview
 
-![image](https://github.com/vikpe/qw-demobot/assets/1616817/e762df1e-504c-41b3-8316-1079fd29e1cd)
+![image](https://github.com/vikpe/qw-demobot/assets/1616817/5010507a-c773-4d26-a57b-92a015613fba)
 
 * **Message Proxy**: Central point for communication.
 * **Quake Manager**: Interaction with ezQuake
