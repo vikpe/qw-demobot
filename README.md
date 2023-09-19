@@ -2,7 +2,30 @@
 
 > Setup for automated QuakeWorld client streaming demos, accepting commands via Twitch chat.
 
-* :link:**Visit [twitch.tv/QuakeWorldDemos](https://www.twitch.tv/QuakeWorldDemos)** to see it in action.
+* **Visit [twitch.tv/QuakeWorldDemos](https://www.twitch.tv/QuakeWorldDemos)** to see it in action.
+
+## How does it work? (TLDR version)
+
+ezQuake reads from a pipe located at `/tmp/ezquake_[username]` on posix systems, where `username` is the username of the
+user who started the ezQuake process.
+
+So basically all you have to do is to write commands to `/tmp/ezquake_[username]`.
+
+## Stack
+
+* Written in [Go (Golang)](https://github.com/golang/go)
+* [ZeroMQ](https://zeromq.org/) - Communication/messages (single proxy and multiple subscribers/publishers)
+
+## Overview
+
+![image](https://user-images.githubusercontent.com/1616817/186941072-cc99679d-b1d0-41f7-bdba-913bb733e140.png)
+
+* **Message Proxy**: Central point for communication.
+* **Quake Manager**: Interaction with ezQuake
+    * Log monitor (thread): Read in-game events (demo started, demo stopped, etc)
+    * Process monitor (thread): ezQuake events (started, stopped)
+* **Twitch Manager**: Interaction with Twitch channel (e.g. set title).
+* **Twitch Bot**: Interaction with Twitch chat.
 
 ## Development
 
