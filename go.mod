@@ -7,8 +7,9 @@ require (
 	github.com/fatih/color v1.15.0
 	github.com/gempir/go-twitch-irc/v4 v4.0.0
 	github.com/goccy/go-json v0.10.2
+	github.com/icza/backscanner v0.0.0-20230330133933-bf6beb754c70
 	github.com/joho/godotenv v1.5.1
-	github.com/nicklaw5/helix/v2 v2.25.0
+	github.com/nicklaw5/helix/v2 v2.25.1
 	github.com/pebbe/zmq4 v1.2.10
 	github.com/samber/lo v1.38.1
 	github.com/stretchr/testify v1.8.4
@@ -33,6 +34,7 @@ require (
 	github.com/go-resty/resty/v2 v2.8.0 // indirect
 	github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
 	github.com/golang-jwt/jwt/v4 v4.5.0 // indirect
+	github.com/icza/mighty v0.0.0-20230330133200-c4b03a294ed8 // indirect
 	github.com/jpillora/longestcommon v0.0.0-20161227235612-adb9d91ee629 // indirect
 	github.com/kr/pretty v0.3.1 // indirect
 	github.com/leodido/go-urn v1.2.4 // indirect

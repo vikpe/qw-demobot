@@ -5,7 +5,7 @@ const (
 	EzquakeStarted = "ezquake.started"
 	EzquakeStopped = "ezquake.stopped"
 
-	DemoTitleChanged = "demo.title_changed"
+	DemoFilenameChanged = "demo.filename_changed"
 )
 
 // commands

@@ -16,8 +16,9 @@ func main() {
 	}
 
 	manager := quake_manager.New(
-		os.Getenv("EZQUAKE_BIN_PATH"),
 		os.Getenv("EZQUAKE_PROCESS_USERNAME"),
+		os.Getenv("EZQUAKE_BIN_PATH"),
+		os.Getenv("EZQUAKE_LOG_PATH"),
 		os.Getenv("ZMQ_PUBLISHER_ADDRESS"),
 		os.Getenv("ZMQ_SUBSCRIBER_ADDRESS"),
 	)

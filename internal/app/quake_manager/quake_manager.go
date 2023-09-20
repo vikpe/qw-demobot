@@ -23,6 +23,7 @@ var pfmt = prettyfmt.New("quakemanager", color.FgHiCyan, "15:04:05", color.FgWhi
 
 type QuakeManager struct {
 	controller     *ezquake.ClientController
+	logMonitor     *monitor.LogMonitor
 	processMonitor *monitor.ProcessMonitor
 	evaluateTask   *task.PeriodicalTask
 	subscriber     *zeromq.Subscriber
@@ -31,8 +32,9 @@ type QuakeManager struct {
 }
 
 func New(
-	ezquakeBinPath string,
 	ezquakeProcessUsername string,
+	ezquakeBinPath string,
+	ezquakeLogPath string,
 	publisherAddress string,
 	subscriberAddress string,
 ) *QuakeManager {
@@ -43,6 +45,7 @@ func New(
 	manager := QuakeManager{
 		controller:     controller,
 		processMonitor: monitor.NewProcessMonitor(controller.Process.IsStarted, publisher.SendMessage),
+		logMonitor:     monitor.NewLogMonitor(ezquakeLogPath, publisher.SendMessage),
 		evaluateTask:   task.NewPeriodicalTask(func() { publisher.SendMessage(topic.QuakeManagerEvaluate) }),
 		subscriber:     subscriber,
 		commander:      commander.NewCommander(publisher.SendMessage),
@@ -63,6 +66,7 @@ func (m *QuakeManager) Start() {
 
 		// event dispatchers
 		go m.processMonitor.Start(3 * time.Second)
+		go m.logMonitor.Start(3 * time.Second)
 
 		if m.controller.Process.IsStarted() {
 			go m.evaluateTask.Start(10 * time.Second)
@@ -92,7 +96,7 @@ func (m *QuakeManager) OnMessage(msg message.Message) {
 		topic.EzquakeStopped: m.OnEzquakeStopped,
 
 		// demo events
-		topic.DemoTitleChanged: m.OnDemoTitleChanged,
+		topic.DemoFilenameChanged: m.OnDemoChanged,
 	}
 
 	if handler, ok := handlers[msg.Topic]; ok {
@@ -142,9 +146,9 @@ func (m *QuakeManager) OnEzquakeStopped(msg message.Message) {
 	m.evaluateTask.Stop()
 }
 
-func (m *QuakeManager) OnDemoTitleChanged(msg message.Message) {
+func (m *QuakeManager) OnDemoChanged(msg message.Message) {
 	matchtag := msg.Content.ToString()
-	pfmt.Println("OnDemoTitleChanged", matchtag)
+	pfmt.Println("OnDemoChanged", matchtag)
 
 	if strings.Contains(matchtag, "paus") {
 		return
