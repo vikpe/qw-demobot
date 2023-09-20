@@ -21,18 +21,22 @@ func appendToFile(path string, content string) {
 
 func TestLogMonitor(t *testing.T) {
 	logPath := "test_logmonitor.log"
+	os.OpenFile(logPath, os.O_RDWR|os.O_TRUNC, 0666)
+
 	eventCallback := mock.NewPublisherMock()
 	logMonitor := monitor.NewLogMonitor(logPath, eventCallback.SendMessage)
 
 	go logMonitor.Start(10 * time.Microsecond)
 	appendToFile(logPath, "#demo#start#duel_xantom_vs_bps.mvd")
 	time.Sleep(time.Millisecond * 20)
-	appendToFile(logPath, "#demo#demo_stop#")
+	appendToFile(logPath, "#demo#stop#")
 	time.Sleep(time.Millisecond * 20)
 
 	expectCalls := [][]any{
-		{"demo.filename_changed", "duel_xantom_vs_bps.mvd"},
-		{"demo.filename_changed", ""},
+		{"demo.started", "duel_xantom_vs_bps.mvd"},
+		{"demo.changed", "duel_xantom_vs_bps.mvd"},
+		{"demo.stopped", "duel_xantom_vs_bps.mvd"},
+		{"demo.changed", ""},
 	}
 	assert.Equal(t, expectCalls, eventCallback.SendMessageCalls)
 
@@ -43,27 +47,27 @@ func TestLogMonitor(t *testing.T) {
 
 func TestLogParser(t *testing.T) {
 	logPath := "test_logparser.log"
-	logParser := monitor.NewLogParser(logPath)
+	os.OpenFile(logPath, os.O_RDWR|os.O_TRUNC, 0666)
 
-	logParser.Truncate()
-	assert.Equal(t, "", logParser.GetCurrentDemoFilename())
+	logParser := monitor.NewLogParser(logPath)
+	assert.Equal(t, "", logParser.GetDemo())
 
 	appendToFile(logPath, "config loaded")
-	assert.Equal(t, "", logParser.GetCurrentDemoFilename())
+	assert.Equal(t, "", logParser.GetDemo())
 
 	appendToFile(logPath, "#demo#start#duel_xantom_vs_bps.mvd")
 	appendToFile(logPath, "match started")
-	assert.Equal(t, "duel_xantom_vs_bps.mvd", logParser.GetCurrentDemoFilename())
+	assert.Equal(t, "duel_xantom_vs_bps.mvd", logParser.GetDemo())
 
 	appendToFile(logPath, "1 minute left")
-	assert.Equal(t, "duel_xantom_vs_bps.mvd", logParser.GetCurrentDemoFilename())
+	assert.Equal(t, "duel_xantom_vs_bps.mvd", logParser.GetDemo())
 
 	appendToFile(logPath, "#demo#stop#")
-	assert.Equal(t, "", logParser.GetCurrentDemoFilename())
+	assert.Equal(t, "", logParser.GetDemo())
 
 	appendToFile(logPath, "#demo#start#duel_xantom_vs_bps.mvd")
 	appendToFile(logPath, "#demo#start#duel_xantom_vs_xterm.mvd")
-	assert.Equal(t, "duel_xantom_vs_xterm.mvd", logParser.GetCurrentDemoFilename())
+	assert.Equal(t, "duel_xantom_vs_xterm.mvd", logParser.GetDemo())
 
 	os.Remove(logPath) // cleanup
 }

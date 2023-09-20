@@ -11,20 +11,20 @@ import (
 )
 
 type LogMonitor struct {
-	isStopped        bool
-	path             string
-	onEvent          func(string, ...any)
-	lastDemoFilename string
-	logParser        *LogParser
+	isStopped bool
+	path      string
+	onEvent   func(string, ...any)
+	lastDemo  string
+	logParser *LogParser
 }
 
 func NewLogMonitor(path string, onEvent func(topic string, data ...any)) *LogMonitor {
 	return &LogMonitor{
-		isStopped:        false,
-		path:             path,
-		onEvent:          onEvent,
-		lastDemoFilename: "",
-		logParser:        NewLogParser(path),
+		isStopped: false,
+		path:      path,
+		onEvent:   onEvent,
+		lastDemo:  "",
+		logParser: NewLogParser(path),
 	}
 }
 
@@ -37,19 +37,26 @@ func (p *LogMonitor) Start(interval time.Duration) {
 			return
 		}
 
-		p.CompareStates()
+		p.compareStates()
 	}
 }
 
-func (p *LogMonitor) CompareStates() {
-	currentDemoFilename := p.logParser.GetCurrentDemoFilename()
-	p.logParser.Truncate()
+func (p *LogMonitor) compareStates() {
+	currentDemo := p.logParser.GetDemo()
+	hasStartedDemo := p.lastDemo == "" && currentDemo != ""
+	hasStoppedDemo := p.lastDemo != "" && currentDemo == ""
 
-	if currentDemoFilename != p.lastDemoFilename {
-		p.onEvent(topic.DemoFilenameChanged, currentDemoFilename)
+	if hasStartedDemo {
+		p.onEvent(topic.DemoStarted, currentDemo)
+	} else if hasStoppedDemo {
+		p.onEvent(topic.DemoStopped, p.lastDemo)
 	}
 
-	p.lastDemoFilename = currentDemoFilename
+	if currentDemo != p.lastDemo {
+		p.onEvent(topic.DemoChanged, currentDemo)
+	}
+
+	p.lastDemo = currentDemo
 }
 
 func (p *LogMonitor) Stop() {
@@ -65,27 +72,22 @@ type LogParser struct {
 }
 
 func NewLogParser(path string) *LogParser {
-	// create file if not exists
-	file, err := os.OpenFile(path, os.O_RDONLY|os.O_CREATE, 0666)
-	if err != nil {
-		panic(fmt.Sprintf("LogParser: %s", err))
-	}
-	defer file.Close()
-
 	return &LogParser{
 		path,
 	}
 }
 
-func (l *LogParser) Truncate() {
-	file, err := os.OpenFile(l.path, os.O_RDWR|os.O_TRUNC, 0666)
+func (l *LogParser) touch() {
+	file, err := os.OpenFile(l.path, os.O_RDONLY|os.O_CREATE, 0666)
 	if err != nil {
 		panic(fmt.Sprintf("LogParser: %s", err))
 	}
 	defer file.Close()
 }
 
-func (l *LogParser) GetCurrentDemoFilename() string {
+func (l *LogParser) GetDemo() string {
+	l.touch()
+
 	file, err := os.Open(l.path)
 	if err != nil {
 		panic(err)

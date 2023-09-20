@@ -20,7 +20,7 @@ func New(clientID, accessToken, broadcasterID, subscriberAddress string) (*zerom
 		AppAccessToken: accessToken,
 	})
 
-	subscriber := zeromq.NewSubscriber(subscriberAddress, topic.DemoFilenameChanged)
+	subscriber := zeromq.NewSubscriber(subscriberAddress, topic.DemoChanged)
 
 	if err != nil {
 		err := errors.New(fmt.Sprintf("twitch api client error: %s", err))

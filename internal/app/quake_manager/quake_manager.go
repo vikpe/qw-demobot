@@ -4,7 +4,6 @@ import (
 	"github.com/vikpe/qw-demobot/internal/pkg/calc"
 	"os"
 	"os/signal"
-	"strings"
 	"syscall"
 	"time"
 
@@ -96,7 +95,7 @@ func (m *QuakeManager) OnMessage(msg message.Message) {
 		topic.EzquakeStopped: m.OnEzquakeStopped,
 
 		// demo events
-		topic.DemoFilenameChanged: m.OnDemoChanged,
+		topic.DemoChanged: m.OnDemoFilenameChanged,
 	}
 
 	if handler, ok := handlers[msg.Topic]; ok {
@@ -146,17 +145,13 @@ func (m *QuakeManager) OnEzquakeStopped(msg message.Message) {
 	m.evaluateTask.Stop()
 }
 
-func (m *QuakeManager) OnDemoChanged(msg message.Message) {
-	matchtag := msg.Content.ToString()
-	pfmt.Println("OnDemoChanged", matchtag)
+func (m *QuakeManager) OnDemoFilenameChanged(msg message.Message) {
+	demoFilename := msg.Content.ToString()
+	pfmt.Println("OnDemoFilenameChanged", demoFilename)
 
-	if strings.Contains(matchtag, "paus") {
-		return
+	if len(demoFilename) > 0 {
+		m.commander.Commandf("hud_static_text_scale %f", calc.StaticTextScale(demoFilename))
 	}
 
-	if len(matchtag) > 0 {
-		m.commander.Commandf("hud_static_text_scale %f", calc.StaticTextScale(matchtag))
-	}
-
-	m.commander.Commandf("bot_set_statictext %s", matchtag)
+	m.commander.Commandf("bot_set_statictext %s", demoFilename)
 }
