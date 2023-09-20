@@ -65,7 +65,7 @@ func (m *QuakeManager) Start() {
 
 		// event dispatchers
 		go m.processMonitor.Start(3 * time.Second)
-		go m.logMonitor.Start(3 * time.Second)
+		go m.logMonitor.Start(2 * time.Second)
 
 		if m.controller.Process.IsStarted() {
 			go m.evaluateTask.Start(10 * time.Second)
@@ -95,7 +95,7 @@ func (m *QuakeManager) OnMessage(msg message.Message) {
 		topic.EzquakeStopped: m.OnEzquakeStopped,
 
 		// demo events
-		topic.DemoChanged: m.OnDemoFilenameChanged,
+		topic.DemoChanged: m.OnDemoChanged,
 	}
 
 	if handler, ok := handlers[msg.Topic]; ok {
@@ -145,9 +145,9 @@ func (m *QuakeManager) OnEzquakeStopped(msg message.Message) {
 	m.evaluateTask.Stop()
 }
 
-func (m *QuakeManager) OnDemoFilenameChanged(msg message.Message) {
+func (m *QuakeManager) OnDemoChanged(msg message.Message) {
 	demoFilename := msg.Content.ToString()
-	pfmt.Println("OnDemoFilenameChanged", demoFilename)
+	pfmt.Println("OnDemoChanged", demoFilename)
 
 	if len(demoFilename) > 0 {
 		m.commander.Commandf("hud_static_text_scale %f", calc.StaticTextScale(demoFilename))
