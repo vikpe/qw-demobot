@@ -1,0 +1,73 @@
+{
+  "tournaments": [
+    {
+      "name": "EQL",
+      "events": [
+        {
+          "name": "EQL 9",
+          "best_of": {
+            "4on4_final": 5
+          }
+        },
+        {
+          "name": "EQL 10",
+          "best_of": {
+            "4on4_final": 5
+          }
+        },
+        {
+          "name": "EQL 12",
+          "best_of": {
+            "4on4_final": 5
+          }
+        }
+      ]
+    },
+    {
+      "name": "Ownage",
+      "events": [
+        {
+          "name": "Ownage 3",
+          "best_of": {
+            "duel_final": 5
+          }
+        }
+      ]
+    },
+    {
+      "name": "QHLAN",
+      "events": [
+        {
+          "name": "QHLAN13",
+          "best_of": {
+            "duel_final": 5,
+            "2on2_final": 3
+          }
+        },
+        {
+          "name": "QHLAN2017",
+          "best_of": {
+            "duel_semi": 5,
+            "duel_bronze": 5,
+            "duel_final": 5,
+            "2on2_final": 5,
+            "4on4_final": 3
+          }
+        }
+      ]
+    },
+    {
+      "name": "QuakeCon",
+      "events": [
+        {
+          "name": "QuakeCon 2016",
+          "best_of": {
+            "2on2_lbfinal": 3,
+            "2on2_wbfinal": 3,
+            "2on2_final": 3
+          }
+        }
+      ]
+    }
+  ]
+}
