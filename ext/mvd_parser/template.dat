@@ -1,0 +1,61 @@
+////////////////////////////////////////////////////////////
+#FILE json %demoname%.json
+#EVENT MATCHEND	6
+{
+  "demo": {
+    "filename": "%demoname%",
+    "time": "%demotime%"
+  },
+  "hostname": "%hostname%",
+  "map": {
+    "name": "%mapname%",
+    "filename": "%map%.bsp"
+  },
+  "settings": {
+    "gamedir": "%gamedir%",
+    "fraglimit": "%fraglimit%",
+    "timelimit": "%timelimit%",
+    "deathmatch": "%deathmatchmode%",
+    "maxfps": "%maxfps%",
+    "teamplay": "%teamplay%",
+    "z_ext": "%zext%",
+    "fpd": "%fpd%",
+    "maxclients": "%maxclients%",
+    "maxspectators": "%maxspectators%",
+    "watervis": "%watervis%",
+    "version": "%serverversion%",
+    "mod": "%mod%"
+   },
+   "players": [
+#EVENT_END
+
+#EVENT MATCHEND_ALL 7
+    {
+      "name_sanatized": "%name%",
+      "name_raw": "%nameraw%",
+      "team_sanatized": "%team%",
+      "team_raw": "%teamraw%",
+      "top_color": "%topcolor%",
+      "bottom_color": "%bottomcolor%",
+      "frags": "%frags%",
+      "deaths": "%deaths%",
+      "kills": "%kills%",
+      "teamkills": "%teamkills%",
+      "avg_packetloss": "%avgpl%",
+      "avg_ping": "%avgping%"
+    }
+#EVENT_END
+
+#EVENT MATCHEND_ALL_BETWEEN 8
+    ,
+#EVENT_END
+
+#EVENT MATCHEND_FINAL 9
+  ]
+}
+#EVENT_END
+
+#OUTPUT 6 json
+#OUTPUT 7 json
+#OUTPUT 8 json
+#OUTPUT 9 json
