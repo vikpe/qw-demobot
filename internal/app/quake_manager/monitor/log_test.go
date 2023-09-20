@@ -26,11 +26,11 @@ func TestLogMonitor(t *testing.T) {
 	eventCallback := mock.NewPublisherMock()
 	logMonitor := monitor.NewLogMonitor(logPath, eventCallback.SendMessage)
 
-	go logMonitor.Start(10 * time.Microsecond)
+	go logMonitor.Start(20 * time.Microsecond)
 	appendToFile(logPath, "#demo#start#duel_xantom_vs_bps.mvd")
-	time.Sleep(time.Millisecond * 20)
+	time.Sleep(time.Millisecond * 50)
 	appendToFile(logPath, "#demo#stop#")
-	time.Sleep(time.Millisecond * 20)
+	time.Sleep(time.Millisecond * 50)
 
 	expectCalls := [][]any{
 		{"demo.started", "duel_xantom_vs_bps.mvd"},
