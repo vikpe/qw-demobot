@@ -57,8 +57,8 @@ func (p *LogMonitor) Stop() {
 }
 
 // parse log file
-const TOKEN_DEMO_START = "#bot#demo_start#"
-const TOKEN_DEMO_END = "#bot#demo_stop#"
+const TOKEN_DEMO_START = "#demo#demo_start#"
+const TOKEN_DEMO_END = "#demo#demo_stop#"
 
 type LogParser struct {
 	path string
