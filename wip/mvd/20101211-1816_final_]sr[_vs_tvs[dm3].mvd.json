@@ -1,0 +1,140 @@
+{
+  "demo": {
+    "filename": "20101211-1816_final_]sr[_vs_tvs[dm3].mvd",
+    "time": "1210.35"
+  },
+  "hostname": "qw.foppa.dk #2 - ktx",
+  "map": {
+    "name": "The Abandoned Base",
+    "filename": ".bsp"
+  },
+  "settings": {
+    "gamedir": "qw",
+    "fraglimit": "0",
+    "timelimit": "20",
+    "deathmatch": "0",
+    "maxfps": "77",
+    "teamplay": "2",
+    "z_ext": "235",
+    "fpd": "0",
+    "maxclients": "0",
+    "maxspectators": "4",
+    "watervis": "0",
+    "version": "MVDSV 0.30-SVN",
+    "mod": ""
+  },
+  "players": [
+    {
+      "name_sanatized": "_ en_karl",
+      "name_raw": "\u001C en_karl",
+      "team_sanatized": "_sr_",
+      "team_raw": "\u0011sr\u0010",
+      "top_color": "3",
+      "bottom_color": "11",
+      "frags": "22",
+      "deaths": "66",
+      "kills": "",
+      "teamkills": "2",
+      "avg_packetloss": "0",
+      "avg_ping": "38.0423"
+    },
+    {
+      "name_sanatized": "_ ParadokS",
+      "name_raw": "\u001C ParadokS",
+      "team_sanatized": "_sr_",
+      "team_raw": "\u0011sr\u0010",
+      "top_color": "3",
+      "bottom_color": "11",
+      "frags": "19",
+      "deaths": "81",
+      "kills": "",
+      "teamkills": "1",
+      "avg_packetloss": "0.0671642",
+      "avg_ping": "12.3035"
+    },
+    {
+      "name_sanatized": "_ murdoc",
+      "name_raw": "\u001C murdoc",
+      "team_sanatized": "_sr_",
+      "team_raw": "\u0011sr\u0010",
+      "top_color": "3",
+      "bottom_color": "11",
+      "frags": "25",
+      "deaths": "72",
+      "kills": "",
+      "teamkills": "2",
+      "avg_packetloss": "0",
+      "avg_ping": "25.0821"
+    },
+    {
+      "name_sanatized": "[tVS]Ihminen",
+      "name_raw": "[tVS]Ihminen",
+      "team_sanatized": "tvs",
+      "team_raw": "tvs",
+      "top_color": "0",
+      "bottom_color": "11",
+      "frags": "60",
+      "deaths": "33",
+      "kills": "",
+      "teamkills": "2",
+      "avg_packetloss": "0",
+      "avg_ping": "25.0373"
+    },
+    {
+      "name_sanatized": "_ zero",
+      "name_raw": "\u001C zero",
+      "team_sanatized": "_sr_",
+      "team_raw": "\u0011sr\u0010",
+      "top_color": "3",
+      "bottom_color": "11",
+      "frags": "33",
+      "deaths": "73",
+      "kills": "",
+      "teamkills": "3",
+      "avg_packetloss": "0",
+      "avg_ping": "51.1766"
+    },
+    {
+      "name_sanatized": "[tVS]blAze",
+      "name_raw": "[tVS]blAze",
+      "team_sanatized": "tvs",
+      "team_raw": "tvs",
+      "top_color": "0",
+      "bottom_color": "11",
+      "frags": "64",
+      "deaths": "26",
+      "kills": "",
+      "teamkills": "1",
+      "avg_packetloss": "0",
+      "avg_ping": "25.0224"
+    },
+    {
+      "name_sanatized": "[tVS]Milton",
+      "name_raw": "[tVS]Milton",
+      "team_sanatized": "tvs",
+      "team_raw": "tvs",
+      "top_color": "0",
+      "bottom_color": "11",
+      "frags": "79",
+      "deaths": "22",
+      "kills": "",
+      "teamkills": "4",
+      "avg_packetloss": "0",
+      "avg_ping": "38.4453"
+    },
+    {
+      "name_sanatized": "[tVS]XantoM",
+      "name_raw": "[tVS]XantoM",
+      "team_sanatized": "tvs",
+      "team_raw": "tvs",
+      "top_color": "0",
+      "bottom_color": "11",
+      "frags": "63",
+      "deaths": "48",
+      "kills": "",
+      "teamkills": "1",
+      "avg_packetloss": "0.0447761",
+      "avg_ping": "25.0075"
+    }
+  ]
+}
