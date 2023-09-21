@@ -22,6 +22,11 @@ func New(path string) *DemoCollection {
 	}
 }
 
+func (d *DemoCollection) GetStage(filename string) string {
+	parts := strings.SplitN(filename, "_", 4)
+	return parts[2]
+}
+
 func (d *DemoCollection) GetInfo(filename string) (mvd_parser.Demo, error) {
 	infoFilename := filename + ".json"
 	infoFilePath, err := ffind.FindFileAbsPath(d.Path, infoFilename)
@@ -42,18 +47,18 @@ func (d *DemoCollection) GetInfo(filename string) (mvd_parser.Demo, error) {
 	return info, err
 }
 
-func (d *DemoCollection) GetEvent(filename string) (string, error) {
+func (d *DemoCollection) GetEvent(filename string) string {
 	infoFilename := filename + ".json"
 	infoFilePath, err := ffind.FindFileAbsPath(d.Path, infoFilename)
 
 	if err != nil {
-		return "", err
+		return "unknown"
 	}
 
 	relPath := strings.TrimPrefix(infoFilePath, d.Path+"/")
 	dirs := strings.SplitN(relPath, "/", 3)
 	eventName := strings.ReplaceAll(dirs[1], "_", " ")
-	return eventName, nil
+	return eventName
 }
 
 func (d *DemoCollection) GetTitle(filename string) (string, error) {

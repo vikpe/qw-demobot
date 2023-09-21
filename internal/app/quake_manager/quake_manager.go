@@ -1,6 +1,7 @@
 package quake_manager
 
 import (
+	"fmt"
 	"github.com/vikpe/qw-demobot/internal/pkg/calc"
 	"github.com/vikpe/qw-demobot/internal/pkg/demo_collection"
 	"os"
@@ -155,15 +156,9 @@ func (m *QuakeManager) OnDemoChanged(msg message.Message) {
 	title := demoFilename
 
 	if len(demoFilename) > 0 {
-		titleFromDemo, err := m.demos.GetTitle(demoFilename)
-		if err == nil {
-			title = titleFromDemo
-		}
-
-		eventFromDemo, err := m.demos.GetEvent(demoFilename)
-		if err == nil {
-			title = eventFromDemo + " - " + title
-		}
+		stage := m.demos.GetStage(demoFilename)
+		eventName := m.demos.GetEvent(demoFilename)
+		title = fmt.Sprintf("%s / %s", eventName, stage)
 
 		m.commander.Commandf("hud_static_text_scale %f", calc.StaticTextScale(title))
 	}
