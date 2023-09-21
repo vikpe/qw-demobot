@@ -2,6 +2,7 @@ package quake_manager
 
 import (
 	"github.com/vikpe/qw-demobot/internal/pkg/calc"
+	"github.com/vikpe/qw-demobot/internal/pkg/demo_collection"
 	"os"
 	"os/signal"
 	"syscall"
@@ -27,6 +28,7 @@ type QuakeManager struct {
 	evaluateTask   *task.PeriodicalTask
 	subscriber     *zeromq.Subscriber
 	commander      *commander.Commander
+	demos          *demo_collection.DemoCollection
 	stopChan       chan os.Signal
 }
 
@@ -48,6 +50,7 @@ func New(
 		evaluateTask:   task.NewPeriodicalTask(func() { publisher.SendMessage(topic.QuakeManagerEvaluate) }),
 		subscriber:     subscriber,
 		commander:      commander.NewCommander(publisher.SendMessage),
+		demos:          demo_collection.New("/home/vikpe/games/demoquake/qw/demos/tournaments"),
 	}
 	subscriber.OnMessage = manager.OnMessage
 
@@ -149,9 +152,21 @@ func (m *QuakeManager) OnDemoChanged(msg message.Message) {
 	demoFilename := msg.Content.ToString()
 	pfmt.Println("OnDemoChanged", demoFilename)
 
+	title := demoFilename
+
 	if len(demoFilename) > 0 {
-		m.commander.Commandf("hud_static_text_scale %f", calc.StaticTextScale(demoFilename))
+		titleFromDemo, err := m.demos.GetTitle(demoFilename)
+		if err == nil {
+			title = titleFromDemo
+		}
+
+		eventFromDemo, err := m.demos.GetEvent(demoFilename)
+		if err == nil {
+			title = eventFromDemo + " - " + title
+		}
+
+		m.commander.Commandf("hud_static_text_scale %f", calc.StaticTextScale(title))
 	}
 
-	m.commander.Commandf("bot_set_statictext %s", demoFilename)
+	m.commander.Commandf("bot_set_statictext %s", title)
 }
