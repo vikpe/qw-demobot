@@ -23,8 +23,8 @@ func New(path string) *DemoCollection {
 }
 
 func (d *DemoCollection) GetStage(filename string) string {
-	parts := strings.SplitN(filename, "_", 4)
-	return parts[2]
+	parts := strings.SplitN(filename, "_", 3)
+	return parts[1]
 }
 
 func (d *DemoCollection) GetInfo(filename string) (mvd_parser.Demo, error) {
@@ -61,10 +61,10 @@ func (d *DemoCollection) GetEvent(filename string) string {
 	return eventName
 }
 
-func (d *DemoCollection) GetTitle(filename string) (string, error) {
+func (d *DemoCollection) GetTitle(filename string) string {
 	info, err := d.GetInfo(filename)
 	if err != nil {
-		return "", err
+		return "unknown"
 	}
 
 	settings := qsettings.ParseString(info.Settings.ServerInfo)
@@ -75,7 +75,5 @@ func (d *DemoCollection) GetTitle(filename string) (string, error) {
 			Team: qstring.QuakeString(player.Team),
 		})
 	}
-	title := qtitle.New(settings, clients)
-
-	return title, nil
+	return qtitle.New(settings, clients)
 }
