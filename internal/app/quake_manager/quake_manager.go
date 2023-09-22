@@ -28,6 +28,7 @@ type QuakeManager struct {
 	processMonitor *monitor.ProcessMonitor
 	evaluateTask   *task.PeriodicalTask
 	subscriber     *zeromq.Subscriber
+	publisher      *zeromq.Publisher
 	commander      *commander.Commander
 	demos          *demo_collection.DemoCollection
 	stopChan       chan os.Signal
@@ -49,6 +50,7 @@ func New(
 		processMonitor: monitor.NewProcessMonitor(controller.Process.IsStarted, publisher.SendMessage),
 		logMonitor:     monitor.NewLogMonitor(ezquakeLogPath, publisher.SendMessage),
 		evaluateTask:   task.NewPeriodicalTask(func() { publisher.SendMessage(topic.QuakeManagerEvaluate) }),
+		publisher:      publisher,
 		subscriber:     subscriber,
 		commander:      commander.NewCommander(publisher.SendMessage),
 		demos:          demo_collection.New("/home/vikpe/games/demoquake/qw/demos/tournaments"),
@@ -153,15 +155,22 @@ func (m *QuakeManager) OnDemoChanged(msg message.Message) {
 	demoFilename := msg.Content.ToString()
 	pfmt.Println("OnDemoChanged", demoFilename)
 
-	title := demoFilename
+	eventAndStage := demoFilename
 
 	if len(demoFilename) > 0 {
+		// ingame
 		stage := m.demos.GetStage(demoFilename)
 		eventName := m.demos.GetEvent(demoFilename)
-		title = fmt.Sprintf("%s / %s", eventName, stage)
+		eventAndStage = fmt.Sprintf("%s / %s", eventName, stage)
+		m.commander.Commandf("hud_static_text_scale %f", calc.StaticTextScale(eventAndStage))
 
-		m.commander.Commandf("hud_static_text_scale %f", calc.StaticTextScale(title))
+		// twitch
+		demoTitle := m.demos.GetTitle(demoFilename)
+		twitchTitle := fmt.Sprintf("%s / %s", eventAndStage, demoTitle)
+		m.publisher.SendMessage(topic.TwitchChannelSetTitle, twitchTitle)
+	} else {
+		m.publisher.SendMessage(topic.TwitchChannelSetTitle, "24/7 QuakeWorld demos")
 	}
 
-	m.commander.Commandf("bot_set_statictext %s", title)
+	m.commander.Commandf("bot_set_statictext %s", eventAndStage)
 }

@@ -20,7 +20,7 @@ func New(clientID, accessToken, broadcasterID, subscriberAddress string) (*zerom
 		AppAccessToken: accessToken,
 	})
 
-	subscriber := zeromq.NewSubscriber(subscriberAddress, topic.DemoChanged)
+	subscriber := zeromq.NewSubscriber(subscriberAddress, topic.TwitchChannelSetTitle)
 
 	if err != nil {
 		err := errors.New(fmt.Sprintf("twitch api client error: %s", err))
@@ -45,6 +45,7 @@ func New(clientID, accessToken, broadcasterID, subscriberAddress string) (*zerom
 
 func SetTitle(apiClient *helix.Client, broadcasterID, title string) error {
 	const quakeGameId = "7348"
+	fmt.Println("new title", title)
 
 	_, err := apiClient.EditChannelInformation(&helix.EditChannelInformationParams{
 		BroadcasterID: broadcasterID,
