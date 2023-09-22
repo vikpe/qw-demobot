@@ -53,7 +53,7 @@ func New(
 		publisher:      publisher,
 		subscriber:     subscriber,
 		commander:      commander.NewCommander(publisher.SendMessage),
-		demos:          demo_collection.New("/home/vikpe/games/demoquake/qw/demos/tournaments"),
+		demos:          demo_collection.New("/home/vikpe/games/demoquake/qw/demos"),
 	}
 	subscriber.OnMessage = manager.OnMessage
 
@@ -155,22 +155,26 @@ func (m *QuakeManager) OnDemoChanged(msg message.Message) {
 	demoFilename := msg.Content.ToString()
 	pfmt.Println("OnDemoChanged", demoFilename)
 
-	eventAndStage := demoFilename
+	inGameTitle := ""
+	twitchTitle := "24/7 QuakeWorld demos"
 
 	if len(demoFilename) > 0 {
-		// ingame
-		stage := m.demos.GetStage(demoFilename)
-		eventName := m.demos.GetEvent(demoFilename)
-		eventAndStage = fmt.Sprintf("%s %s", eventName, stage)
-		m.commander.Commandf("hud_static_text_scale %f", calc.StaticTextScale(eventAndStage))
-
-		// twitch
+		eventInfo := m.demos.GetEventInfo(demoFilename)
 		demoTitle := m.demos.GetTitle(demoFilename)
-		twitchTitle := fmt.Sprintf("%s / %s", eventAndStage, demoTitle)
-		m.publisher.SendMessage(topic.TwitchChannelSetTitle, twitchTitle)
-	} else {
-		m.publisher.SendMessage(topic.TwitchChannelSetTitle, "24/7 QuakeWorld demos")
+		twitchTitle = demoTitle
+
+		if len(eventInfo) > 0 {
+			inGameTitle = eventInfo
+			twitchTitle = fmt.Sprintf("%s / %s", eventInfo, demoTitle)
+		} else {
+			inGameTitle = demoFilename
+		}
 	}
 
-	m.commander.Commandf("bot_set_statictext %s", eventAndStage)
+	if len(inGameTitle) > 0 {
+		m.commander.Commandf("hud_static_text_scale %f", calc.StaticTextScale(inGameTitle))
+	}
+
+	m.commander.Commandf("bot_set_statictext %s", inGameTitle)
+	m.publisher.SendMessage(topic.TwitchChannelSetTitle, twitchTitle)
 }

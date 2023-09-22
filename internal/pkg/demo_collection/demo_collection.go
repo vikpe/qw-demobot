@@ -1,6 +1,7 @@
 package demo_collection
 
 import (
+	"fmt"
 	"github.com/goccy/go-json"
 	"github.com/vikpe/qw-demobot/internal/pkg/ffind"
 	"github.com/vikpe/qw-demobot/internal/pkg/mvd_parser"
@@ -9,6 +10,7 @@ import (
 	"github.com/vikpe/serverstat/qserver/qtitle"
 	"github.com/vikpe/serverstat/qtext/qstring"
 	"io/ioutil"
+	"path/filepath"
 	"strings"
 )
 
@@ -23,12 +25,29 @@ func New(path string) *DemoCollection {
 }
 
 func (d *DemoCollection) GetStage(filename string) string {
+	filePath, err := ffind.FindFileAbsPath(d.Path, filename)
+
+	if err != nil || strings.Contains(filePath, "unsorted") {
+		return ""
+	}
+
 	parts := strings.SplitN(filename, "_", 3)
 	return parts[1]
 }
 
-func (d *DemoCollection) GetInfo(filename string) (mvd_parser.Demo, error) {
-	infoFilename := filename + ".json"
+func (d *DemoCollection) GetInfoFilename(filename string) string {
+	targetFilename := filename
+	ext := filepath.Ext(filename)
+
+	if ext != ".mvd" {
+		targetFilename = strings.TrimSuffix(filename, ext) + ".mvd"
+	}
+
+	return targetFilename + ".json"
+}
+
+func (d *DemoCollection) GetMvdParserInfo(filename string) (mvd_parser.Demo, error) {
+	infoFilename := d.GetInfoFilename(filename)
 	infoFilePath, err := ffind.FindFileAbsPath(d.Path, infoFilename)
 
 	if err != nil {
@@ -47,24 +66,31 @@ func (d *DemoCollection) GetInfo(filename string) (mvd_parser.Demo, error) {
 	return info, err
 }
 
-func (d *DemoCollection) GetEvent(filename string) string {
+func (d *DemoCollection) GetEventInfo(filename string) string {
 	infoFilename := filename + ".json"
 	infoFilePath, err := ffind.FindFileAbsPath(d.Path, infoFilename)
 
-	if err != nil {
-		return "unknown"
+	if err != nil || !strings.Contains(infoFilePath, "/tournaments") {
+		return ""
 	}
 
 	relPath := strings.TrimPrefix(infoFilePath, d.Path+"/")
 	dirs := strings.SplitN(relPath, "/", 3)
 	eventName := strings.ReplaceAll(dirs[1], "_", " ")
-	return eventName
+
+	if strings.Count(filename, "_") < 3 {
+		return eventName
+	}
+
+	parts := strings.SplitN(filename, "_", 3)
+	stage := parts[1]
+	return fmt.Sprintf("%s %s", eventName, stage)
 }
 
 func (d *DemoCollection) GetTitle(filename string) string {
-	info, err := d.GetInfo(filename)
+	info, err := d.GetMvdParserInfo(filename)
 	if err != nil {
-		return "unknown"
+		return filename
 	}
 
 	settings := qsettings.ParseString(info.ServerInfo)
