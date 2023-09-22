@@ -22,8 +22,8 @@ func Clamp[T constraints.Ordered](value, min, max T) T {
 }
 
 func StaticTextScale(text string) float64 {
-	scaleMin := 1.0
-	scaleMax := 1.5
+	scaleMin := 0.8
+	scaleMax := 1.2
 	lengthMin := float64(len("getquad semi")) // 12
 	lengthMax := 3.0 * lengthMin
 

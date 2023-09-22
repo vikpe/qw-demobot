@@ -30,8 +30,8 @@ func TestRoundFloat64(t *testing.T) {
 }
 
 func TestStaticTextScale(t *testing.T) {
-	assert.Equal(t, 1.5, calc.StaticTextScale(""))
-	assert.Equal(t, 1.5, calc.StaticTextScale("getquad semi"))
-	assert.Equal(t, 1.25, calc.StaticTextScale("getquad semigetquad semi"))
-	assert.Equal(t, 1.0, calc.StaticTextScale("getquad semigetquad semigetquad semi"))
+	assert.Equal(t, 1.2, calc.StaticTextScale(""))
+	assert.Equal(t, 1.2, calc.StaticTextScale("getquad semi"))
+	assert.Equal(t, 1.0, calc.StaticTextScale("getquad semigetquad semi"))
+	assert.Equal(t, 0.8, calc.StaticTextScale("getquad semigetquad semigetquad semi"))
 }
