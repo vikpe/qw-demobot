@@ -16,7 +16,8 @@ const (
 	EzquakeScript  = "ezquake.script"
 	EzquakeStop    = "ezquake.stop"
 
-	TwitchChatbotSay = "twitch_chatbot.say"
+	TwitchChannelSetTitle = "twitch_channel.set_title"
+	TwitchChatbotSay      = "twitch_chatbot.say"
 
 	QuakeManagerStop     = "quake_manager.stop"
 	QuakeManagerEvaluate = "quake_manager.evaluate"
