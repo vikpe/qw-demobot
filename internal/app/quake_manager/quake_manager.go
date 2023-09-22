@@ -161,7 +161,7 @@ func (m *QuakeManager) OnDemoChanged(msg message.Message) {
 		// ingame
 		stage := m.demos.GetStage(demoFilename)
 		eventName := m.demos.GetEvent(demoFilename)
-		eventAndStage = fmt.Sprintf("%s / %s", eventName, stage)
+		eventAndStage = fmt.Sprintf("%s %s", eventName, stage)
 		m.commander.Commandf("hud_static_text_scale %f", calc.StaticTextScale(eventAndStage))
 
 		// twitch
