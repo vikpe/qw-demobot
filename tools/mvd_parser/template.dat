@@ -1,7 +1,9 @@
 ////////////////////////////////////////////////////////////
 #FILE json %demoname%.json
+
 #EVENT MATCHEND	6
 {
+  "date": "%matchstartyear%-%matchstartmonth%-%matchstartdate% %matchstarthour%:%matchstartminute%",
   "duration": "%demotime%",
   "map": "%map%",
   "serverinfo": "%serverinfo%",
