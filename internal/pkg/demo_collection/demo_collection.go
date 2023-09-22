@@ -67,7 +67,7 @@ func (d *DemoCollection) GetTitle(filename string) string {
 		return "unknown"
 	}
 
-	settings := qsettings.ParseString(info.Settings.ServerInfo)
+	settings := qsettings.ParseString(info.ServerInfo)
 	var clients []qclient.Client
 	for _, player := range info.Players {
 		clients = append(clients, qclient.Client{

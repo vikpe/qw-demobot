@@ -2,19 +2,10 @@
 #FILE json %demoname%.json
 #EVENT MATCHEND	6
 {
-  "filename": "%demoname%",
   "duration": "%demotime%",
-  "map": "%mapname%",
-  "settings": {
-    "serverinfo": "%serverinfo%",
-    "gamedir": "%gamedir%",
-    "fraglimit": "%fraglimit%",
-    "timelimit": "%timelimit%",
-    "deathmatch": "%deathmatchmode%",
-    "teamplay": "%teamplay%",
-    "maxclients": "%maxclients%"
-   },
-   "players": [
+  "map": "%map%",
+  "serverinfo": "%serverinfo%",
+  "players": [
 #EVENT_END
 
 #EVENT MATCHEND_ALL 7
