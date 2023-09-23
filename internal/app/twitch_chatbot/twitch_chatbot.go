@@ -86,19 +86,19 @@ func New(channelName, channelAccessToken, subscriberAddress, publisherAddress st
 	})
 
 	bot.AddCommand("next", func(cmd chatbot.Command, msg twitch.PrivateMessage) {
-		if !chatbot.IsModerator(msg.User) {
+		/*if !chatbot.IsModerator(msg.User) {
 			bot.Reply(msg, "cmd is a mod-only command.")
 			return
-		}
+		}*/
 
 		cmder.Command("demo_playlist_next")
 	})
 
 	bot.AddCommand("prev", func(cmd chatbot.Command, msg twitch.PrivateMessage) {
-		if !chatbot.IsModerator(msg.User) {
+		/*if !chatbot.IsModerator(msg.User) {
 			bot.Reply(msg, "cmd is a mod-only command.")
 			return
-		}
+		}*/
 
 		cmder.Command("demo_playlist_prev")
 	})

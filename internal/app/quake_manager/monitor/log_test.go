@@ -27,15 +27,15 @@ func TestLogMonitor(t *testing.T) {
 	logMonitor := monitor.NewLogMonitor(logPath, eventCallback.SendMessage)
 
 	go logMonitor.Start(20 * time.Microsecond)
-	appendToFile(logPath, "#demo#start#duel_xantom_vs_bps.mvd")
+	appendToFile(logPath, "#demo#start#duel_xantom_vs_bps")
 	time.Sleep(time.Millisecond * 50)
 	appendToFile(logPath, "#demo#stop#")
 	time.Sleep(time.Millisecond * 50)
 
 	expectCalls := [][]any{
-		{"demo.started", "duel_xantom_vs_bps.mvd"},
-		{"demo.changed", "duel_xantom_vs_bps.mvd"},
-		{"demo.stopped", "duel_xantom_vs_bps.mvd"},
+		{"demo.started", "duel_xantom_vs_bps"},
+		{"demo.changed", "duel_xantom_vs_bps"},
+		{"demo.stopped", "duel_xantom_vs_bps"},
 		{"demo.changed", ""},
 	}
 	assert.Equal(t, expectCalls, eventCallback.SendMessageCalls)
@@ -55,19 +55,19 @@ func TestLogParser(t *testing.T) {
 	appendToFile(logPath, "config loaded")
 	assert.Equal(t, "", logParser.GetDemo())
 
-	appendToFile(logPath, "#demo#start#duel_xantom_vs_bps.mvd")
+	appendToFile(logPath, "#demo#start#duel_xantom_vs_bps")
 	appendToFile(logPath, "match started")
-	assert.Equal(t, "duel_xantom_vs_bps.mvd", logParser.GetDemo())
+	assert.Equal(t, "duel_xantom_vs_bps", logParser.GetDemo())
 
 	appendToFile(logPath, "1 minute left")
-	assert.Equal(t, "duel_xantom_vs_bps.mvd", logParser.GetDemo())
+	assert.Equal(t, "duel_xantom_vs_bps", logParser.GetDemo())
 
 	appendToFile(logPath, "#demo#stop#")
 	assert.Equal(t, "", logParser.GetDemo())
 
-	appendToFile(logPath, "#demo#start#duel_xantom_vs_bps.mvd")
-	appendToFile(logPath, "#demo#start#duel_xantom_vs_xterm.mvd")
-	assert.Equal(t, "duel_xantom_vs_xterm.mvd", logParser.GetDemo())
+	appendToFile(logPath, "#demo#start#duel_xantom_vs_bps")
+	appendToFile(logPath, "#demo#start#duel_xantom_vs_xterm")
+	assert.Equal(t, "duel_xantom_vs_xterm", logParser.GetDemo())
 
 	os.Remove(logPath) // cleanup
 }
