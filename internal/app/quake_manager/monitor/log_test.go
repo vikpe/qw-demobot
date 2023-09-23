@@ -34,9 +34,9 @@ func TestLogMonitor(t *testing.T) {
 
 	expectCalls := [][]any{
 		{"demo.started", "duel_xantom_vs_bps"},
-		{"demo.changed", "duel_xantom_vs_bps"},
+		{"demo.name_changed", "duel_xantom_vs_bps"},
 		{"demo.stopped", "duel_xantom_vs_bps"},
-		{"demo.changed", ""},
+		{"demo.name_changed", ""},
 	}
 	assert.Equal(t, expectCalls, eventCallback.SendMessageCalls)
 
