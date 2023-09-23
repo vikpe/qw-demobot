@@ -155,7 +155,7 @@ func (m *QuakeManager) OnDemoNameChanged(msg message.Message) {
 	demoName := msg.Content.ToString()
 	pfmt.Println("OnDemoNameChanged", demoName)
 
-	inGameTitle := ""
+	inGameTitle := demoName
 	twitchTitle := "24/7 QuakeWorld demos"
 
 	if len(demoName) > 0 {
@@ -166,14 +166,6 @@ func (m *QuakeManager) OnDemoNameChanged(msg message.Message) {
 		if len(eventInfo) > 0 {
 			inGameTitle = eventInfo
 			twitchTitle = fmt.Sprintf("%s / %s", eventInfo, demoTitle)
-		} else {
-			demoFilename, err := m.demos.GetFilename(demoName)
-
-			if err != nil {
-				inGameTitle = demoName
-			} else {
-				inGameTitle = demoFilename
-			}
 		}
 	}
 
@@ -188,7 +180,4 @@ func (m *QuakeManager) OnDemoNameChanged(msg message.Message) {
 
 	m.commander.Commandf("bot_set_statictext %s", inGameTitle)
 	m.publisher.SendMessage(topic.TwitchChannelSetTitle, twitchTitle)
-
-	// settings
-
 }
