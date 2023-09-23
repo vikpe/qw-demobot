@@ -53,7 +53,7 @@ func (p *LogMonitor) compareStates() {
 	}
 
 	if currentDemo != p.lastDemo {
-		p.onEvent(topic.DemoChanged, currentDemo)
+		p.onEvent(topic.DemoNameChanged, currentDemo)
 	}
 
 	p.lastDemo = currentDemo

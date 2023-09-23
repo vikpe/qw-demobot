@@ -101,7 +101,7 @@ func (m *QuakeManager) OnMessage(msg message.Message) {
 		topic.EzquakeStopped: m.OnEzquakeStopped,
 
 		// demo events
-		topic.DemoChanged: m.OnDemoChanged,
+		topic.DemoNameChanged: m.OnDemoNameChanged,
 	}
 
 	if handler, ok := handlers[msg.Topic]; ok {
@@ -151,9 +151,9 @@ func (m *QuakeManager) OnEzquakeStopped(msg message.Message) {
 	m.evaluateTask.Stop()
 }
 
-func (m *QuakeManager) OnDemoChanged(msg message.Message) {
-	demoFilename := msg.Content.ToString()
-	pfmt.Println("OnDemoChanged", demoFilename)
+func (m *QuakeManager) OnDemoNameChanged(msg message.Message) {
+	demoName := msg.Content.ToString()
+	pfmt.Println("OnDemoNameChanged", demoName)
 
 	inGameTitle := ""
 	twitchTitle := "24/7 QuakeWorld demos"

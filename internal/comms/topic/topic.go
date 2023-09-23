@@ -5,9 +5,9 @@ const (
 	EzquakeStarted = "ezquake.started"
 	EzquakeStopped = "ezquake.stopped"
 
-	DemoChanged = "demo.changed"
-	DemoStarted = "demo.started"
-	DemoStopped = "demo.stopped"
+	DemoNameChanged = "demo.name_changed"
+	DemoStarted     = "demo.started"
+	DemoStopped     = "demo.stopped"
 )
 
 // commands
