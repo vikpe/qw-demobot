@@ -1,7 +1,7 @@
 package info
 
 import (
-	"github.com/vikpe/qw-demobot/internal/pkg/mvdparser"
+	"github.com/vikpe/qw-demobot/internal/pkg/demo/mvdparser"
 	"github.com/vikpe/serverstat/qserver/mvdsv/qmode"
 	"github.com/vikpe/serverstat/qserver/qclient"
 	"github.com/vikpe/serverstat/qserver/qsettings"
@@ -66,6 +66,11 @@ func (i *Info) GetTitle() string {
 	settings := i.Settings
 	settings["matchtag"] = ""
 	return qtitle.New(settings, i.Players)
+}
+
+func (i *Info) GetMode() qmode.Mode {
+	mode, _ := qmode.Parse(i.Settings)
+	return mode
 }
 
 func calcMaxClients(settings qsettings.Settings, players []qclient.Client) int {

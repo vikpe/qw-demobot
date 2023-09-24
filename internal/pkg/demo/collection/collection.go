@@ -2,8 +2,10 @@ package collection
 
 import (
 	"fmt"
+	"github.com/vikpe/qw-demobot/internal/pkg/demo/export"
 	"github.com/vikpe/qw-demobot/internal/pkg/demo/info"
 	"github.com/vikpe/qw-demobot/internal/pkg/futil"
+	"sort"
 	"strings"
 )
 
@@ -117,4 +119,26 @@ func (d *Collection) GetSha256(demoName string) (string, error) {
 	}
 
 	return futil.FindFileSha256(d.Path, fileName)
+}
+
+func (d *Collection) Export(itemCallback func(string, export.Export) export.Export) []export.Export {
+	infoPaths := futil.FindFilepathsByExtension(d.Path, ".mvd.json")
+	sort.Strings(infoPaths)
+
+	result := make([]export.Export, 0)
+
+	// collect demos
+	for _, infoPath := range infoPaths {
+		demoExport, err := export.NewFromInfoPath(infoPath)
+
+		if err != nil {
+			fmt.Println("unable to export", infoPath)
+			continue
+		}
+
+		demoPath := strings.ReplaceAll(infoPath, ".mvd.json", ".json")
+		result = append(result, itemCallback(demoPath, demoExport))
+	}
+
+	return result
 }
