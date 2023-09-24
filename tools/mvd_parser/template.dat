@@ -3,6 +3,7 @@
 
 #EVENT MATCHEND	6
 {
+  "filepath": "%demoname%",
   "date": "%matchstartyear%-%matchstartmonth%-%matchstartdate% %matchstarthour%:%matchstartminute%",
   "duration": "%demotime%",
   "map": "%map%",
@@ -13,7 +14,14 @@
 #EVENT MATCHEND_ALL 7
     {
       "name": "%name%",
-      "team": "%team%"
+      "team": "%team%",
+      "top_color": %topcolor%,
+      "bottom_color": %bottomcolor%,
+      "frags": %frags%,
+      "teamkills": %teamkills%,
+      "deaths": %deaths%,
+      "suicides": %suicides%,
+      "avg_ping": "%avgping%"
     }
 #EVENT_END
 
