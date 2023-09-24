@@ -17,7 +17,7 @@ require (
 	github.com/vikpe/go-qwhub v0.1.2
 	github.com/vikpe/prettyfmt v0.0.0-20220720175521-e445f605e771
 	github.com/vikpe/qw-hub-api v0.4.2
-	github.com/vikpe/serverstat v1.2.4
+	github.com/vikpe/serverstat v1.2.5
 	github.com/vikpe/twitch-chatbot v0.2.3
 	golang.org/x/exp v0.0.0-20230905200255-921286631fa9
 )
