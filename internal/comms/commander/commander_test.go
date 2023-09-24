@@ -10,7 +10,7 @@ import (
 
 func TestCommander_Autotrack(t *testing.T) {
 	publisher := mock.NewPublisherMock()
-	cmder := commander.NewCommander(publisher.SendMessage)
+	cmder := commander.New(publisher.SendMessage)
 	cmder.Autotrack()
 
 	expectedCalls := [][]any{{"ezquake.command", "bot_track"}}
@@ -19,7 +19,7 @@ func TestCommander_Autotrack(t *testing.T) {
 
 func TestCommander_Command(t *testing.T) {
 	publisher := mock.NewPublisherMock()
-	cmder := commander.NewCommander(publisher.SendMessage)
+	cmder := commander.New(publisher.SendMessage)
 	cmder.Command("console")
 
 	expectedCalls := [][]any{{"ezquake.command", "console"}}
@@ -28,7 +28,7 @@ func TestCommander_Command(t *testing.T) {
 
 func TestCommander_Commandf(t *testing.T) {
 	publisher := mock.NewPublisherMock()
-	cmder := commander.NewCommander(publisher.SendMessage)
+	cmder := commander.New(publisher.SendMessage)
 	cmder.Commandf("say %s", "foo")
 
 	expectedCalls := [][]any{{"ezquake.command", "say foo"}}
@@ -37,7 +37,7 @@ func TestCommander_Commandf(t *testing.T) {
 
 func TestCommander_Evaluate(t *testing.T) {
 	publisher := mock.NewPublisherMock()
-	cmder := commander.NewCommander(publisher.SendMessage)
+	cmder := commander.New(publisher.SendMessage)
 	cmder.Evaluate()
 
 	expectedCalls := [][]any{{"quake_manager.evaluate"}}
@@ -46,7 +46,7 @@ func TestCommander_Evaluate(t *testing.T) {
 
 func TestCommander_LoadConfig(t *testing.T) {
 	publisher := mock.NewPublisherMock()
-	cmder := commander.NewCommander(publisher.SendMessage)
+	cmder := commander.New(publisher.SendMessage)
 	cmder.LoadConfig()
 
 	expectedCalls := [][]any{{"ezquake.script", "load_config"}}
@@ -55,7 +55,7 @@ func TestCommander_LoadConfig(t *testing.T) {
 
 func TestCommander_Showscores(t *testing.T) {
 	publisher := mock.NewPublisherMock()
-	cmder := commander.NewCommander(publisher.SendMessage)
+	cmder := commander.New(publisher.SendMessage)
 	cmder.Showscores()
 
 	expectedCalls := [][]any{{"ezquake.script", "showscores"}}
@@ -64,7 +64,7 @@ func TestCommander_Showscores(t *testing.T) {
 
 func TestCommander_StopEzquake(t *testing.T) {
 	publisher := mock.NewPublisherMock()
-	cmder := commander.NewCommander(publisher.SendMessage)
+	cmder := commander.New(publisher.SendMessage)
 	cmder.StopEzquake()
 
 	expectedCalls := [][]any{{"ezquake.stop"}}
@@ -73,7 +73,7 @@ func TestCommander_StopEzquake(t *testing.T) {
 
 func TestCommander_Track(t *testing.T) {
 	publisher := mock.NewPublisherMock()
-	cmder := commander.NewCommander(publisher.SendMessage)
+	cmder := commander.New(publisher.SendMessage)
 	cmder.Track("xantom")
 
 	expectedCalls := [][]any{{"ezquake.command", "bot_track xantom"}}

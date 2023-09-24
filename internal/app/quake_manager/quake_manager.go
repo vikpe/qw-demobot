@@ -3,7 +3,7 @@ package quake_manager
 import (
 	"fmt"
 	"github.com/vikpe/qw-demobot/internal/pkg/calc"
-	"github.com/vikpe/qw-demobot/internal/pkg/demo_collection"
+	"github.com/vikpe/qw-demobot/internal/pkg/demo/collection"
 	"os"
 	"os/signal"
 	"syscall"
@@ -30,7 +30,7 @@ type QuakeManager struct {
 	subscriber     *zeromq.Subscriber
 	publisher      *zeromq.Publisher
 	commander      *commander.Commander
-	demos          *demo_collection.DemoCollection
+	demos          *collection.Collection
 	stopChan       chan os.Signal
 }
 
@@ -52,8 +52,8 @@ func New(
 		evaluateTask:   task.NewPeriodicalTask(func() { publisher.SendMessage(topic.QuakeManagerEvaluate) }),
 		publisher:      publisher,
 		subscriber:     subscriber,
-		commander:      commander.NewCommander(publisher.SendMessage),
-		demos:          demo_collection.New("/home/vikpe/games/demoquake/qw/demos"),
+		commander:      commander.New(publisher.SendMessage),
+		demos:          collection.New("/home/vikpe/games/demoquake/qw/demos"),
 	}
 	subscriber.OnMessage = manager.OnMessage
 

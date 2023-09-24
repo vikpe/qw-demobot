@@ -1,4 +1,4 @@
-package mvd_parser
+package mvdparser
 
 import (
 	"fmt"

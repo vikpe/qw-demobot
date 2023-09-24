@@ -56,7 +56,7 @@ func New(channelName, channelAccessToken, subscriberAddress, publisherAddress st
 	}
 
 	// channel commands
-	cmder := commander.NewCommander(zeromq.NewPublisher(publisherAddress).SendMessage)
+	cmder := commander.New(zeromq.NewPublisher(publisherAddress).SendMessage)
 
 	bot.AddCommand("autotrack", func(cmd chatbot.Command, msg twitch.PrivateMessage) {
 		cmder.Autotrack()
